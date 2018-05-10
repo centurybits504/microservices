@@ -1,0 +1,45 @@
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    add-service:
+      path: /addition/**
+      serviceId: add-service
+    sub-service:
+      path: /subtraction/**
+      serviceId: sub-service 
+    client-service:
+      path: /client/**
+      serviceId: client-service
+    div-service:
+      path: /division/**
+      serviceId: div-service
+
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8082/eureka/
+    healthcheck:
+      enabled: true
+    lease:
+      duration: 5
+
+
+server:
+  port: 8087
+
+spring:
+  application:
+    name: zuul-service
+
+# Increase the Hystrix timeout to 60s (for all)
+hystrix:
+ command:
+  default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000    
